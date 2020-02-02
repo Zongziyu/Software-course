@@ -10,6 +10,6 @@ It is our project of software engineer course.
 我们项目的分工为：<br>
 | name | mission |
 | :-: | :-: |
-|zzy| daiding |
-|cyr| daiding |
-|ysy| daiding |
+| zzy | daiding |
+| cyr | daiding |
+| ysy | daiding |
