@@ -8,6 +8,7 @@ It is our project of software engineer course.
 我们的项目为： （待定）
 
 我们项目的分工为：<br>
+
 | name | mission |
 | :--: | :--: |
 | zzy | daiding |
