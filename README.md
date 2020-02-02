@@ -9,6 +9,6 @@ It is our project of software engineer course.
 
 我们项目的分工为：<br>
 | :-: | :-: |
-|zzy| |
-|cyr| |
-|ysy| |
+|zzy| daiding |
+|cyr| daiding |
+|ysy| daiding |
