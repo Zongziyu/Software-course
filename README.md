@@ -20,3 +20,22 @@ zzy, cyr, ysy
 | zzy | daiding |
 | cyr | daiding |
 | ysy | daiding |
+
+## 待讨论的问题
+
+### 一、开发语言
+
+Python or Java
+
+### 二、开发环境
+
+OS 推荐使用 linux
+
+语言版本
+
+
+
+## 项目如何管理
+
+1. 从开始就集成，不采用分模块开发最后集成的做法
+2. 多讨论，相互之间的技术交流促进进步
