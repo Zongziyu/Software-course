@@ -3,13 +3,19 @@ It is our project of software engineer course.
 
 大三学年春季学期，软件工程课程中的项目我们将用github管理。
 
-我们的项目成员有：zzy, cyr, ysy
+## 项目介绍
+### 项目名称
+pass
 
-我们的项目为： （待定）
+### 项目功能
+pass
 
-我们项目的分工为：<br>
+### 项目成员
+zzy, cyr, ysy
 
-| name | mission |
+### 项目分工
+
+| Name | Mission |
 | :--: | :--: |
 | zzy | daiding |
 | cyr | daiding |
