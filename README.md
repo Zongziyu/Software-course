@@ -25,11 +25,11 @@ zzy, cyr, ysy
 
 ### 一、开发语言
 
-Python or Java
+Java
 
 ### 二、开发环境
 
-OS 推荐使用 linux
+OS: Ubuntu 16.04
 
 语言版本
 
