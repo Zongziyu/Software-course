@@ -40,6 +40,10 @@ OS: Ubuntu 16.04
 1. 从开始就集成，不采用分模块开发最后集成的做法
 2. 多讨论，相互之间的技术交流促进进步
 
+## UML
+
+<img src="Software_UML.jpg">
+
 ## Mission in every week
 Our Project start at 06/02/2020
 
