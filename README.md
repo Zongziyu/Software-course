@@ -4,8 +4,8 @@ It is our project of software engineer course.
 大三学年春季学期，软件工程课程中的项目我们将用github管理。
 
 ## 项目介绍
-### 项目名称
-联机斗地主
+###项目名称
+斗他丫的
 
 ### 项目功能
 能够提供联网三人斗地主的软件
