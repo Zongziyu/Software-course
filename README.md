@@ -8,10 +8,10 @@ It is our project of software engineer course.
 联机斗地主
 
 ### 项目功能
-能够提供联网三人斗地主的软件
+能够提供联网三人斗地主功能的软件
 
 ### 项目成员
-zzy, cyr, ysy
+zzy, cyr, ysy, xjs
 
 ### 项目分工
 
@@ -20,6 +20,7 @@ zzy, cyr, ysy
 | zzy | daiding |
 | cyr | daiding |
 | ysy | daiding |
+| xjs | daiding |
 
 ## 待讨论的问题
 
@@ -31,7 +32,7 @@ Java
 
 OS: Ubuntu 16.04
 
-语言版本
+Java Version:  jdk-8u241
 
 ### 三、开发周期
 
@@ -39,7 +40,7 @@ OS: Ubuntu 16.04
 
 ### 四、检测
 
-如何判断每段接口程序的正确性
+如何判断每段接口程序的正确性？
 
 ## 项目如何管理&开发
 
@@ -69,15 +70,17 @@ OS: Ubuntu 16.04
 <img src="Software_UML.jpg">
 
 ## 在项目上的时间
-|日期|时间段|时长(h)|
+|Date|Time segments|Hours(h)|
 |:--:|:--:|:--:|
 |05/02|20:00-23:00|3|
 |06/02|14:00-16:30|2.5|
 |07/02|14:30-16:30|2|
 |08/02|14:00-16:30|2.5|
+|10/02|14:00-16:30|2.5|
 ## Mission in every week
 Our Project start at 06/02/2020
 
 | Date | Missions |
 | :--: | :--: |
 | 06/02-09/02 | 1.Build the environment(Ubuntu,Java,Git)<br>2. Git Learning<br>3.Software PPT<br> |
+|10/02-16/02| 1. Continue learning software PPT<br>2. Familiarity with java<br>3. Review the usage of inheritance, polymorphism and interface<br>4. Strengthen the expression of class relation in UML |
