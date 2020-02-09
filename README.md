@@ -3,42 +3,39 @@ It is our project of software engineer course.
 
 大三学年春季学期，软件工程课程中的项目我们将用github管理。
 
-## 项目介绍
-### 项目名称
+## Introduction
+### Name
 联机斗地主
 
-### 项目功能
+### Function
 能够提供联网三人斗地主功能的软件
 
-### 项目成员
+### Members
 zzy, cyr, ysy, xjs
 
-### 项目分工
+### Division
+| Name | zzy | cyr | ysy | xjs  |
+| :--: | :--: | :--: | :--: | :-: |
+| Mission | daiding |daiding |daiding |daiding |
 
-| Name | Mission |
-| :--: | :--: |
-| zzy | daiding |
-| cyr | daiding |
-| ysy | daiding |
-| xjs | daiding |
+## Question need discuss
 
-## 待讨论的问题
-
-### 一、开发语言
+### 一、Programming Language
 
 Java
 
-### 二、开发环境
+### 二、Environment
 
 OS: Ubuntu 16.04
 
 Java Version:  jdk-8u241
 
-### 三、开发周期
+### 三、Development cycles
 
-多长的开发周期？
+- How long?
+- what kind of rhythm?
 
-### 四、检测
+### 四、Testing
 
 如何判断每段接口程序的正确性？
 
@@ -69,7 +66,7 @@ Java Version:  jdk-8u241
 
 <img src="Software_UML.jpg">
 
-## 在项目上的时间
+## Time invested in this project
 |Date|Time segments|Hours(h)|
 |:--:|:--:|:--:|
 |05/02|20:00-23:00|3|
@@ -77,6 +74,7 @@ Java Version:  jdk-8u241
 |07/02|14:30-16:30|2|
 |08/02|14:00-16:30|2.5|
 |10/02|14:00-16:30|2.5|
+
 ## Mission in every week
 Our Project start at 06/02/2020
 
