@@ -5,7 +5,7 @@ It is our project of software engineer course.
 
 ## Introduction
 ### Name
-联机斗地主
+斗他丫的
 
 ### Function
 能够提供联网三人斗地主功能的软件
@@ -74,6 +74,7 @@ Java Version:  jdk-8u241
 |07/02|14:30-16:30|2|
 |08/02|14:00-16:30|2.5|
 |10/02|14:00-16:30|2.5|
+|11/02|14:00-16:30|2.5|
 
 ## Mission in every week
 Our Project start at 06/02/2020
