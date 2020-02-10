@@ -5,7 +5,7 @@ It is our project of software engineer course.
 
 ## Introduction
 ### Name
-斗他丫的
+联机斗地主
 
 ### Function
 能够提供联网三人斗地主功能的软件
