@@ -1,14 +1,14 @@
 # Software-course
 It is our project of software engineer course.
 
-大三学年春季学期，软件工程课程中的项目我们将用github管理。
+In the spring semester of junior year, we will use GitHub to manage the projects in the software engineering course.
 
 ## Introduction
 ### Name
-联机斗地主
+Online fight landlord
 
 ### Function
-能够提供联网三人斗地主功能的软件
+A software can provide the function of three people fighting against the landlord
 
 ### Members
 zzy, cyr, ysy, xjs
@@ -37,7 +37,7 @@ Java Version:  jdk-8u241
 
 ### 四、Testing
 
-如何判断每段接口程序的正确性？
+How to judge the correctness of each interface program?
 
 ## 项目如何管理&开发
 
