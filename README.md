@@ -26,7 +26,7 @@ Java
 
 ### 二、Environment
 
-OS: Ubuntu 18.04
+OS: Ubuntu 18.04 and manjaro 18.1.5
 
 Java Version:  jdk-8u241
 
