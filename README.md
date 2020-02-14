@@ -80,8 +80,8 @@ How to judge the correctness of each interface program?
 ## Mission in every week
 Our Project start at 06/02/2020
 
-##Study Web
-https://blog.csdn.net/xietansheng/article/details/72814492
+## Study Web
+Java Swing :  https://blog.csdn.net/xietansheng/article/details/72814492
 
 | Date | Missions |
 | :--: | :--: |
