@@ -80,6 +80,9 @@ How to judge the correctness of each interface program?
 ## Mission in every week
 Our Project start at 06/02/2020
 
+##Study Web
+https://blog.csdn.net/xietansheng/article/details/72814492
+
 | Date | Missions |
 | :--: | :--: |
 | 06/02-09/02 | 1.Build the environment(Ubuntu,Java,Git)<br>2. Git Learning<br>3.Software PPT<br> |
