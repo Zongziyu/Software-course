@@ -16,7 +16,7 @@ zzy, cyr, ysy, xjs
 ### Division
 | Name | zzy | cyr | ysy | xjs  |
 | :--: | :--: | :--: | :--: | :-: |
-| Mission | daiding |daiding |daiding |daiding |
+| Mission | undetermined | undetermined | undetermined | undetermined |
 
 ## Question need discuss
 
@@ -26,9 +26,9 @@ Java
 
 ### 二、Environment
 
-OS: Ubuntu 18.04 and manjaro 18.1.5
+OS: Manjaro 18.1.5 (Old Version: Ubuntu 18.04)
 
-Java Version:  jdk-8u241
+Java Version: OpenJDK 11.0.6 (Old Version: jdk-8u241)
 
 ### 三、Development cycles
 
@@ -72,10 +72,10 @@ How to judge the correctness of each interface program?
 |Time segments|20:00-23:00|14:00-16:30|14:30-16:30|14:00-16:30|14:00-16:30|14:00-16:30|14:00-16:30|14:00-16:30|
 |Hours|3|2.5|2|2.5|2.5|2.5|2.5|2.5|
 
-|Date|13/02|
-|:--:|:--:|
-|Time segments|14:00-16:30|
-|Hours|2.5|
+|Date|13/02|14/02|
+|:--:|:--:|:--:|
+|Time segments|14:00-16:30|14:00-16:30|
+|Hours|2.5|2.5|
 
 ## Mission in every week
 Our Project start at 06/02/2020
