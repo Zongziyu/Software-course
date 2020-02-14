@@ -80,10 +80,10 @@ How to judge the correctness of each interface program?
 ## Mission in every week
 Our Project start at 06/02/2020
 
-## Study Web
-Java Swing :  https://blog.csdn.net/xietansheng/article/details/72814492
-
 | Date | Missions |
 | :--: | :--: |
 | 06/02-09/02 | 1.Build the environment(Ubuntu,Java,Git)<br>2. Git Learning<br>3.Software PPT<br> |
 |10/02-16/02| 1. Continue learning software PPT<br>2. Familiarity with java<br>3. Review the usage of inheritance, polymorphism and interface<br>4. Strengthen the expression of class relation in UML |
+
+## Study Web
+- Java Swing :  https://blog.csdn.net/xietansheng/article/details/72814492
