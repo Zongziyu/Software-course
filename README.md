@@ -8,7 +8,7 @@ In the spring semester of junior year, we will use GitHub to manage the projects
 Online fight landlord
 
 ### Function
-A software can provide the function of three people fighting against the landlord
+A software can provide the function of three people fighting against the landlord *Online*
 
 ### Members
 zzy, cyr, ysy, xjs
