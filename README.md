@@ -87,3 +87,6 @@ Our Project start at 06/02/2020
 
 ## Study Web
 - Java Swing :  https://blog.csdn.net/xietansheng/article/details/72814492
+
+## Project Details
+Package name:FightAgainstLandlords
