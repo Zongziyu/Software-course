@@ -64,11 +64,7 @@ public class Card {
 	//牌面大小获取
 	public int GetCard(int card) {
 		if(card < 53) {
-			int number;
-			number = card % 13;
-			if(number == 0)
-				number = 13;
-			return number;
+			return card % 13 + 1;
 		}
 		else
 			return card;
