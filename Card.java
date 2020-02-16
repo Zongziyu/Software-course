@@ -1,7 +1,10 @@
 package FightAgainstLandlords;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Card {
-	int number[] = new int[54];
+	public List<Integer> number = new ArrayList<Integer>();
 	/*用[1~54]表示每一张卡牌
 	 * [1~13]红桃
 	 * [14~26]方片
@@ -9,10 +12,11 @@ public class Card {
 	 * [40~52]黑桃
 	 * 53小王，54大王
 	 * */
-	Card(){
+	public List<Integer> CreateCard(){
 		for(int i = 0; i < 54;i++){
-			number[i] = i + 1;
+			number.add(i + 1);
 		}
+		return number;
 	}
 	
 	//返回花色0代表红桃，1方片，2草花，3黑桃，4王
@@ -64,7 +68,11 @@ public class Card {
 	//牌面大小获取
 	public int GetCard(int card) {
 		if(card < 53) {
-			return card % 13 + 1;
+			int number;
+			number = card % 13;
+			if(number == 0)
+				number = 13;
+			return number;
 		}
 		else
 			return card;
