@@ -84,6 +84,7 @@ Our Project start at 06/02/2020
 | :--: | :--: |
 | 06/02-09/02 | 1.Build the environment(Ubuntu,Java,Git)<br>2. Git Learning<br>3.Software PPT<br> |
 |10/02-16/02| 1. Continue learning software PPT<br>2. Familiarity with java<br>3. Review the usage of inheritance, polymorphism and interface<br>4. Strengthen the expression of class relation in UML |
+| 16/02-23/02 | 1. Finish learning software PPT<br>2. Familiariy with java<br>3. Everyone write a small java project with GUI<br>4. Revised the UML in Sat. and Sun.|
 
 ## Study Web
 - Java Swing :  https://blog.csdn.net/xietansheng/article/details/72814492
