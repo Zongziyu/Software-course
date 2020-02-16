@@ -75,7 +75,7 @@ How to judge the correctness of each interface program?
 |Date|12/02|13/02|14/02|15/02|16/02|
 |:--:|:--:|:--:|:-:|:--:|:--:|
 |Time|14:00-16:30|14:00-16:30|14:00-16:30|14:00-16:00|14:00-16:30|
-|Hours|2.5|2.5|2.5|2|2.30|
+|Hours|2.5|2.5|2.5|2|2.5|
 
 ## Mission in every week
 Our Project start at 06/02/2020
