@@ -18,24 +18,22 @@ zzy, cyr, ysy, xjs
 | :--: | :--: | :--: | :--: | :-: |
 | Mission | undetermined | undetermined | undetermined | undetermined |
 
-## Question need discuss
-
-### 一、Programming Language
-
+### Programming Language
 Java
 
-### 二、Environment
-
+### Environment
 OS: Manjaro 18.1.5 (Old Version: Ubuntu 18.04)
 
 Java Version: OpenJDK 11.0.6 (Old Version: jdk-8u241)
 
-### 三、Development cycles
+## Issues to be discussed
+
+### Development cycles
 
 - How long?
 - what kind of rhythm?
 
-### 四、Testing
+### Testing
 
 How to judge the correctness of each interface program?
 
