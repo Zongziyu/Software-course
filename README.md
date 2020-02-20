@@ -31,7 +31,7 @@ Java Version: OpenJDK 11.0.6 (Old Version: jdk-8u241)
 ### Development cycles
 
 - How long?
-- what kind of rhythm?
+- What kind of rhythm?
 
 ### Testing
 
@@ -72,7 +72,7 @@ How to judge the correctness of each interface program?
 
 |Date|12/02|13/02|14/02|15/02|16/02|17/02|18/02|
 |:--:|:--:|:--:|:-:|:--:|:--:|:--:|:--:|
-|Time|14:00-16:30|14:00-16:30|14:00-16:30|14:00-16:00|14:00-16:30|14:00-16:30|14:000-16:30|
+|Time|14:00-16:30|14:00-16:30|14:00-16:30|14:00-16:00|14:00-16:30|14:00-16:30|14:00-16:30|
 |Hours|2.5|2.5|2.5|2.0|2.5|2.5|2.5|
 
 |Date|19/02|20/02||||||
@@ -87,7 +87,7 @@ Our Project start at 06/02/2020
 | :--: | :--: |
 | 06/02-09/02 | 1.Build the environment(Ubuntu,Java,Git)<br>2. Git Learning<br>3.Software PPT<br> |
 |10/02-16/02| 1. Continue learning software PPT<br>2. Familiarity with java<br>3. Review the usage of inheritance, polymorphism and interface<br>4. Strengthen the expression of class relation in UML |
-| 16/02-23/02 | 1. Finish learning software PPT<br>2. Familiariy with java<br>3. Everyone write a small java project with GUI<br>4. Revised the UML in Sat. and Sun.|
+| 16/02-23/02 | 1. Finish learning software PPT<br>2. Familiariy with java<br>3. Everyone write a small java project with GUI<br>4. Revise the UML at Sat. and Sun.|
 
 ## Study Web
 - Java Swing :  https://blog.csdn.net/xietansheng/article/details/72814492
