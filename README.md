@@ -75,10 +75,10 @@ How to judge the correctness of each interface program?
 |Time|14:00-16:30|14:00-16:30|14:00-16:30|14:00-16:00|14:00-16:30|14:00-16:30|14:00-16:30|
 |Hours|2.5|2.5|2.5|2.0|2.5|2.5|2.5|
 
-|Date|19/02|20/02|21/02|22/02||||
+|Date|19/02|20/02|21/02|22/02|23/02|||
 |:--:|:--:|:--:|:-:|:--:|:--:|:--:|:--:|
-|Time|14:00-17:00|14:00-16:30|14:00-16:30|14:00:16:30||||
-|Hours|3.0|2.5|2.5|2.5||||
+|Time|14:00-17:00|14:00-16:30|14:00-16:30|14:00:16:30|14:00:16:30|||
+|Hours|3.0|2.5|2.5|2.5|2.5|||
 
 ## Mission in every week
 Our Project start at 06/02/2020
@@ -91,6 +91,13 @@ Our Project start at 06/02/2020
 
 ## Study Web
 - Java Swing :  https://blog.csdn.net/xietansheng/article/details/72814492
+
+## Rules in Coding
+- write @Override before the function you Override
+```java
+@Override
+public void run(){}
+```
 
 ## Project Details
 Package name:FightAgainstLandlords
