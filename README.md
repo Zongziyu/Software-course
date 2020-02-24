@@ -11,7 +11,7 @@ Online fight landlord
 A software can provide the function of three people fighting against the landlord *Online*
 
 ### Members
-zzy, cyr, ysy, xjs
+zongziyu(zzy), chenyiran(cyr), yuanshaoyang(ysy), xingjunshuai(xjs)
 
 ### Division
 | Name | zzy | cyr | ysy | xjs  |
