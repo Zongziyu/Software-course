@@ -16,7 +16,7 @@ zongziyu(zzy), chenyiran(cyr), yuanshaoyang(ysy), xingjunshuai(xjs)
 ### Division
 | Name | zzy | cyr | ysy | xjs  |
 | :--: | :--: | :--: | :--: | :-: |
-| Mission | undetermined | undetermined | undetermined | undetermined |
+| Mission | onstage | backstage | backstage | onstage |
 
 ### Programming Language
 Java
@@ -26,16 +26,48 @@ OS: Manjaro 18.1.5 (Old Version: Ubuntu 18.04)
 
 Java Version: OpenJDK 11.0.6 (Old Version: jdk-8u241)
 
-## Issues to be discussed
 
-### Development cycles
+## UML
 
-- How long?
-- What kind of rhythm?
+<img src="Software_UML.jpg">
 
-### Testing
+## Time invested in this project
+|Data|05/02|06/02|07/02|08/02|09/02|10/02|11/02|
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+|Time|20:00-23:00|14:00-16:30|14:30-16:30|14:00-16:30|14:00-16:30|14:00-16:30|14:00-16:30|
+|Hours|3.0|2.5|2.0|2.5|2.5|2.5|2.5|
 
-How to judge the correctness of each interface program?
+|Date|12/02|13/02|14/02|15/02|16/02|17/02|18/02|
+|:--:|:--:|:--:|:-:|:--:|:--:|:--:|:--:|
+|Time|14:00-16:30|14:00-16:30|14:00-16:30|14:00-16:00|14:00-16:30|14:00-16:30|14:00-16:30|
+|Hours|2.5|2.5|2.5|2.0|2.5|2.5|2.5|
+
+|Date|19/02|20/02|21/02|22/02|23/02|24/02|25/02|
+|:--:|:--:|:--:|:-:|:--:|:--:|:--:|:--:|
+|Time|14:00-17:00|14:00-16:30|14:00-16:30|14:00-16:30|14:00-16:30|14:00-17:00|14:00-17:00|
+|Hours|3.0|2.5|2.5|2.5|2.5|3.0|3.0|
+
+## Mission in every week
+Our Project start at 05/02/2020
+
+| Date | Missions |
+| :--: | :--: |
+| 06/02-09/02 | 1.Build the environment(Ubuntu,Java,Git)<br>2. Git Learning<br>3.Software PPT<br> |
+|10/02-16/02| 1. Continue learning software PPT<br>2. Familiarity with java<br>3. Review the usage of inheritance, polymorphism and interface<br>4. Strengthen the expression of class relation in UML |
+| 16/02-23/02 | 1. Finish learning software PPT<br>2. Familiariy with java<br>3. Everyone write a small java project with GUI<br>4. Revise the UML at Sat. and Sun.|
+
+## Study Web
+- Java Swing :  https://blog.csdn.net/xietansheng/article/details/72814492
+
+## Rules in Coding
+- write @Override before the function you Override
+```java
+@Override
+public void run(){}
+```
+
+## Project Details
+Package name:FightAgainstLandlords
 
 ## 项目如何管理&开发
 
@@ -59,45 +91,3 @@ How to judge the correctness of each interface program?
 |边滚边看边调整|	连续验证，对整个软件生产过程提供及时、可靠的信息反馈|
 |任何时候都近圆|	及早集成|
 |早晚一天要崩溃|	一个软件总有一天会寿终正寝，更新不如从头设计新系统|
-
-## UML
-
-<img src="Software_UML.jpg">
-
-## Time invested in this project
-|Data|05/02|06/02|07/02|08/02|09/02|10/02|11/02|
-|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-|Time|20:00-23:00|14:00-16:30|14:30-16:30|14:00-16:30|14:00-16:30|14:00-16:30|14:00-16:30|
-|Hours|3.0|2.5|2.0|2.5|2.5|2.5|2.5|
-
-|Date|12/02|13/02|14/02|15/02|16/02|17/02|18/02|
-|:--:|:--:|:--:|:-:|:--:|:--:|:--:|:--:|
-|Time|14:00-16:30|14:00-16:30|14:00-16:30|14:00-16:00|14:00-16:30|14:00-16:30|14:00-16:30|
-|Hours|2.5|2.5|2.5|2.0|2.5|2.5|2.5|
-
-|Date|19/02|20/02|21/02|22/02|23/02|24/02||
-|:--:|:--:|:--:|:-:|:--:|:--:|:--:|:--:|
-|Time|14:00-17:00|14:00-16:30|14:00-16:30|14:00-16:30|14:00-16:30|14:00-17:00||
-|Hours|3.0|2.5|2.5|2.5|2.5|3||
-
-## Mission in every week
-Our Project start at 06/02/2020
-
-| Date | Missions |
-| :--: | :--: |
-| 06/02-09/02 | 1.Build the environment(Ubuntu,Java,Git)<br>2. Git Learning<br>3.Software PPT<br> |
-|10/02-16/02| 1. Continue learning software PPT<br>2. Familiarity with java<br>3. Review the usage of inheritance, polymorphism and interface<br>4. Strengthen the expression of class relation in UML |
-| 16/02-23/02 | 1. Finish learning software PPT<br>2. Familiariy with java<br>3. Everyone write a small java project with GUI<br>4. Revise the UML at Sat. and Sun.|
-
-## Study Web
-- Java Swing :  https://blog.csdn.net/xietansheng/article/details/72814492
-
-## Rules in Coding
-- write @Override before the function you Override
-```java
-@Override
-public void run(){}
-```
-
-## Project Details
-Package name:FightAgainstLandlords
