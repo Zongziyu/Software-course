@@ -14,7 +14,7 @@ public class LicensingDevice {
 		for(int j = 0;j < 4;j++)
 		{
 			for(int i = 0;i < 13;i++) {
-				Card new_card = new Card(i+1,j);
+				Card new_card = new Card(i,j);
 				Cards.add(new_card);
 			}
 		}
