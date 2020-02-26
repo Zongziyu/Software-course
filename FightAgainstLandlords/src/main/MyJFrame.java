@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.FlowLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -18,7 +20,10 @@ public class MyJFrame extends JFrame{
     JMenuItem openMenuItem = new JMenuItem("打开");
     JMenuItem exitMenuItem = new JMenuItem("退出");
     
-    MyJFrame(int w,int h){
+    MyJPanel mypanel = new MyJPanel();
+    
+    public MyJFrame(int w,int h){
+    	System.out.println("Create a Class MyJFrame!");
     	this.appW=w; this.appH = h;
 		
 //		jframe.getContentPane().add(this); // JFrame是最大框架
@@ -35,11 +40,14 @@ public class MyJFrame extends JFrame{
         fileMenu.addSeparator();       // 添加一条分割线
         fileMenu.add(exitMenuItem);
         
+        this.setLayout(new FlowLayout());
         this.add(menuBar);
+        this.setContentPane(mypanel);
         
         setTitle("Fight Against Landlord");
 		setSize(appW, appH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 关闭时释放资源
+        setLocationRelativeTo(null);
 		setLocation(100, 100);
 		setVisible(true);
     }

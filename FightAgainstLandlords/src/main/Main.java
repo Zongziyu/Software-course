@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
@@ -10,25 +11,23 @@ import java.util.ArrayList;
 import javax.swing.*;
 import gui.*;
 
-public class Main extends MyJFrame implements Runnable{
-	ArrayList gamestate_list;
+public class Main implements Runnable{
+	
 	Thread newThread;
-	
-	
+	MyJFrame jframe;
+//	MyJPanel jpanel;
 	public Main(int w, int h) {
-		super(w,h);
+		System.out.println("Instantiate a Class Main!");
+		jframe = new MyJFrame(w,h);
+//		jpanel = new MyJPanel();
+//		jframe.add(jpanel);
+//		jframe.setContentPane(jpanel);
 		
-		gamestate_list = new ArrayList();
-		gamestate_list.add(new StartUp());
-		gamestate_list.add(new MainMenu());
-		gamestate_list.add(new GamePlay());
-		gamestate_list.add(new GameOver());
+		
 		
 		// 多线程
 		newThread = new Thread(this);
 		newThread.start(); // 线程开始一定要start
-		
-		
 		
 	}
 
@@ -40,6 +39,7 @@ public class Main extends MyJFrame implements Runnable{
 	}
 
 	public static void main(String[] args) { 
+		System.out.println("Create a Class Main!");
 		Main m = new Main(500,500);
 	}
 	

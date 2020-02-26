@@ -1,5 +1,8 @@
 package gui;
 
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
 public class MainMenu extends GameState{
@@ -50,6 +53,15 @@ public class MainMenu extends GameState{
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		// TODO Auto-generated method stub
+		super.paintComponent(g);
+		g.setColor(Color.blue);
+		g.fillRect(10, 20, 100, 100);
+		System.out.println("MainMenu is painting!");
 	}
 
 }
