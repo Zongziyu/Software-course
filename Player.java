@@ -21,7 +21,7 @@ public class Player {
 	}
 	
 	//得到发送的牌
-	public void ObtainCards(List<Card> get_cards) {
+	public void setCards(List<Card> get_cards) {
 		this.keep_card = get_cards;
 	}
 	
@@ -56,17 +56,14 @@ public class Player {
 	}
 	
 	//理牌
-	public void Arrangement() {
-		Collections.sort(this.keep_card,new Comparator<Card>(){
+	public List<Card> Arrangement(List<Card> keep_cards) {
+		Collections.sort(keep_cards,new Comparator<Card>(){
 			@Override
 			public int compare(Card card_1 ,Card card_2) {
 				return card_1.GetNum() - card_2.GetNum();
 			}
 		});
-		
-		for(Card card:this.keep_card) {
-			System.out.print(card.GetNum() + ",");
-		}
+		return keep_cards;
 	}
 	
 	//出牌提示
@@ -244,6 +241,153 @@ public class Player {
 		}
 		return PlayCards;
 	}
+	
+	//打牌
+	public boolean Play(List<Card> choice_cards,List<Card> last_cards){
+		choice_cards = this.Arrangement(choice_cards);
+		last_cards = this.Arrangement(last_cards);
+		boolean can_play = false;
+		boolean haveBomb = false;
+		int choice_number = choice_cards.size();
+		int last_number = last_cards.size();
+		//重复归并统计
+		HashMap<Integer,Integer> last_hash = new HashMap<Integer,Integer>();
+		HashMap<Integer,Integer> choice_hash = new HashMap<Integer,Integer>();
+		for(Card card:last_cards) {
+			if(last_hash.get(card.GetNum()) != null) {
+				Integer integer = last_hash.get(card.GetNum());
+				last_hash.put(card.GetNum(),integer + 1);
+			}
+			else {
+				last_hash.put(card.GetNum(), 1);
+			}
+		}
+		for(Card card:choice_cards) {
+			if(choice_hash.get(card.GetNum()) != null) {
+				Integer integer = choice_hash.get(card.GetNum());
+				choice_hash.put(card.GetNum(),integer + 1);
+			}
+			else {
+				choice_hash.put(card.GetNum(), 1);
+			}
+		}
+		//单
+		if(last_number == 1 && choice_number == 1) {
+			if(choice_cards.get(0).GetNum() > last_cards.get(0).GetNum())
+				can_play = true;
+			else
+				can_play = false;
+		}
+		//对子
+		else if(last_number == 2 && choice_number == 2) {
+			if(last_hash.size() == 2) {
+				can_play = false;
+				haveBomb = true;
+			}
+			else {
+				if(choice_hash.size() == 1) {
+					if(choice_cards.get(0).GetNum() > last_cards.get(0).GetNum())
+						can_play = true;
+					else
+						can_play = false;
+				}
+				else {
+					can_play = false;
+				}
+			}
+		}
+		//3带
+		else if((last_number == 4 && last_hash.size() == 2) || last_number == 5 
+				&& last_hash.size() == 2 && last_number == choice_number) {
+			int lusecard = 0;//3带中的带
+			int cusecard = 0;
+			for(Entry<Integer,Integer> entry : last_hash.entrySet()) {
+				if(entry.getValue() == 3) {
+					lusecard = entry.getKey();
+				}
+			}
+			for(Entry<Integer,Integer> entry : choice_hash.entrySet()) {
+				if(entry.getValue() == 3) {
+					cusecard = entry.getKey();
+				}
+			}
+			if(cusecard > lusecard)
+				can_play = true;
+			else
+				can_play = false;
+		}
+		//顺子
+		else if(last_number >= 6) {
+			if(last_number != choice_number) {
+				can_play = false;
+			}
+			else {
+				if(choice_cards.get(0).GetNum() < last_cards.get(0).GetNum()) {
+					can_play = false;
+				}
+				else {
+					if(last_number / last_hash.size() == 2) {
+						int count = 0;
+						while(count < choice_cards.size() - 2) {
+							if(choice_cards.get(count).GetNum() != choice_cards.get(count+1).GetNum() ||
+									choice_cards.get(count+1).GetNum()+1 != choice_cards.get(count+2).GetNum()) {
+								can_play = false;
+								break;
+							}
+							count+=2;
+						}
+						can_play = true;
+					}
+					else {
+						for(int i = 0; i < choice_number - 1;i++) {
+							if(choice_cards.get(i).GetNum() + 1 != 
+									choice_cards.get(i + 1).GetNum()) {
+								can_play = false;
+								break;
+							}
+						}
+						can_play = true;
+					}
+				}
+			}
+		}
+		
+		//炸弹对炸弹
+		else if(last_number == 4 && last_hash.size() == 1) {
+			haveBomb = true;
+			if(choice_number == 4) {
+				if(choice_hash.size() != 1) {
+					can_play = false;
+				}
+				else {
+					if(choice_cards.get(0).GetNum() > last_cards.get(0).GetNum()) {
+						can_play = true;
+					}
+					else {
+						can_play = false;
+					}
+				}
+			}
+			if(choice_number == 2 && choice_cards.get(0).GetNum() == 13
+					&& choice_cards.get(1).GetNum() == 14) {
+				can_play = true;
+			}
+		}
+		
+		//炸弹解决问题
+		if(haveBomb == false && can_play == false) {
+			if(choice_number == 4 && choice_hash.size() == 1) {
+				can_play = true;
+			}
+			if(choice_number == 2 && choice_cards.get(0).GetNum() == 13
+					&& choice_cards.get(1).GetNum() == 14) {
+				can_play = true;
+			}
+		}
+		
+		return can_play;
+	}
+	
 }
 
 
