@@ -20,10 +20,12 @@ public class Player {
 		this.id = id;
 	}
 	
+	//得到发送的牌
 	public void ObtainCards(List<Card> get_cards) {
 		this.keep_card = get_cards;
 	}
 	
+	//获取手牌
 	public List<Card> GetCards(){
 		return this.keep_card;
 	}
@@ -68,11 +70,10 @@ public class Player {
 	}
 	
 	//出牌提示
-	public List<Card> HowToPlay(List<Card> last_cards,List<Card> my_cards){
+	public List<Card> HowToPlay(List<Card> last_cards){
 		List<Card> PlayCards =  new ArrayList<Card>();
 		//整理重复的牌
 		HashMap<Integer,Integer> last_hash = new HashMap<Integer,Integer>();
-		HashMap<Integer,Integer> my_hash = new HashMap<Integer,Integer>();
 		for(Card card:last_cards) {
 			if(last_hash.get(card.GetNum()) != null) {
 				Integer integer = last_hash.get(card.GetNum());
@@ -82,20 +83,10 @@ public class Player {
 				last_hash.put(card.GetNum(), 1);
 			}
 		}
-		for(Card card:my_cards) {
-			if(my_hash.get(card.GetNum()) != null) {
-				Integer integer = my_hash.get(card.GetNum());
-				my_hash.put(card.GetNum(),integer + 1);
-			}
-			else {
-				my_hash.put(card.GetNum(), 1);
-			}
-		}
-		
 		int last_number = last_cards.size();
 		boolean can_play = false;//表示是否有牌可出
 		if(last_number == 1) {
-			for(Card card:my_cards) {
+			for(Card card:this.keep_card) {
 				if(card.GetNum() > last_cards.get(0).GetNum()) {
 					PlayCards.add(card);
 					can_play = true;
@@ -105,11 +96,11 @@ public class Player {
 		}
 		//对
 		else if(last_number == 2 && last_hash.size() == 1) {
-			for(int i = 0;i < my_cards.size() - 1;i++) {
-				if(my_cards.get(i).GetNum() > last_cards.get(0).GetNum()
-						&& my_cards.get(i + 1).GetNum() == my_cards.get(i).GetNum()) {
-					PlayCards.add(my_cards.get(i));
-					PlayCards.add(my_cards.get(i+1));
+			for(int i = 0;i < this.keep_card.size() - 1;i++) {
+				if(this.keep_card.get(i).GetNum() > last_cards.get(0).GetNum()
+						&& this.keep_card.get(i + 1).GetNum() == this.keep_card.get(i).GetNum()) {
+					PlayCards.add(this.keep_card.get(i));
+					PlayCards.add(this.keep_card.get(i+1));
 					can_play = true;
 					break;
 				}
@@ -123,27 +114,27 @@ public class Player {
 					usecard = entry.getKey();
 				}
 			}
-			for(int i = 0;i < my_cards.size() - 2;i++) {
-				if(my_cards.get(i).GetNum() > usecard && my_cards.get(i).GetNum() == my_cards.get(i+1).GetNum()
-						 && my_cards.get(i+1).GetNum() == my_cards.get(i+2).GetNum()) {
-					PlayCards.add(my_cards.get(i));
-					PlayCards.add(my_cards.get(i+1));
-					PlayCards.add(my_cards.get(i+2));
+			for(int i = 0;i < this.keep_card.size() - 2;i++) {
+				if(this.keep_card.get(i).GetNum() > usecard && this.keep_card.get(i).GetNum() == this.keep_card.get(i+1).GetNum()
+						 && this.keep_card.get(i+1).GetNum() == this.keep_card.get(i+2).GetNum()) {
+					PlayCards.add(this.keep_card.get(i));
+					PlayCards.add(this.keep_card.get(i+1));
+					PlayCards.add(this.keep_card.get(i+2));
 					if(last_number == 4) {
 						if(i != 0) {
-							PlayCards.add(my_cards.get(0));
+							PlayCards.add(this.keep_card.get(0));
 						}
 						else {
-							PlayCards.add(my_cards.get(3));
+							PlayCards.add(this.keep_card.get(3));
 						}
 					}
 					else {
-						for(int j = 0;j < my_cards.size() - 1;j++)
+						for(int j = 0;j < this.keep_card.size() - 1;j++)
 						{
 							if(j < i - 1 || j > i + 2) {
-								if(my_cards.get(j).GetNum() == my_cards.get(j+1).GetNum()) {
-									PlayCards.add(my_cards.get(j));
-									PlayCards.add(my_cards.get(j + 1));
+								if(this.keep_card.get(j).GetNum() == this.keep_card.get(j+1).GetNum()) {
+									PlayCards.add(this.keep_card.get(j));
+									PlayCards.add(this.keep_card.get(j + 1));
 								}
 							}
 						}
@@ -158,13 +149,13 @@ public class Player {
 			if(last_number / last_hash.size() == 2) {
 				int now_number = 0;
 				int i = 0;
-				while(i < my_cards.size() - 2) {
-					if(my_cards.get(i).GetNum() == my_cards.get(i + 1).GetNum()
-							&& my_cards.get(i + 2).GetNum() == my_cards.get(i+1).GetNum() + 1 &&
-							my_cards.get(i).GetNum() > last_cards.get(0).GetNum()) {
-						PlayCards.add(my_cards.get(i));
-						PlayCards.add(my_cards.get(i+1));
-						PlayCards.add(my_cards.get(i+2));
+				while(i < this.keep_card.size() - 2) {
+					if(this.keep_card.get(i).GetNum() == this.keep_card.get(i + 1).GetNum()
+							&& this.keep_card.get(i + 2).GetNum() == this.keep_card.get(i+1).GetNum() + 1 &&
+							this.keep_card.get(i).GetNum() > last_cards.get(0).GetNum()) {
+						PlayCards.add(this.keep_card.get(i));
+						PlayCards.add(this.keep_card.get(i+1));
+						PlayCards.add(this.keep_card.get(i+2));
 						now_number+=3;
 					}
 					else {
@@ -183,10 +174,10 @@ public class Player {
 				int i = 0;
 				int now_number = 0;
 				while(i < last_number - 1) {
-					if(my_cards.get(i).GetNum() + 1 == my_cards.get(i + 1).GetNum() &&
-							my_cards.get(i).GetNum() > last_cards.get(0).GetNum()) {
+					if(this.keep_card.get(i).GetNum() + 1 == this.keep_card.get(i + 1).GetNum() &&
+							this.keep_card.get(i).GetNum() > last_cards.get(0).GetNum()) {
 						now_number += 1;
-						PlayCards.add(my_cards.get(i));
+						PlayCards.add(this.keep_card.get(i));
 					}
 					else {
 						now_number = 0;
@@ -203,12 +194,12 @@ public class Player {
 		//出炸弹
 		if(can_play == false) {
 			//普通炸弹
-			for(int i = 0;i < my_cards.size() - 3;i++) {
-				if(my_cards.get(i).GetNum() == my_cards.get(i + 1).GetNum() &&
-						my_cards.get(i + 1).GetNum() == my_cards.get(i + 2).GetNum() &&
-						my_cards.get(i + 2).GetNum() == my_cards.get(i + 3).GetNum()) {
+			for(int i = 0;i < this.keep_card.size() - 3;i++) {
+				if(this.keep_card.get(i).GetNum() == this.keep_card.get(i + 1).GetNum() &&
+						this.keep_card.get(i + 1).GetNum() == this.keep_card.get(i + 2).GetNum() &&
+						this.keep_card.get(i + 2).GetNum() == this.keep_card.get(i + 3).GetNum()) {
 					for(int j = i;j < i + 4;j++) {
-						PlayCards.add(my_cards.get(j));
+						PlayCards.add(this.keep_card.get(j));
 						can_play = true;
 					}
 					break;
@@ -217,10 +208,10 @@ public class Player {
 			
 			//王炸
 			if(can_play == false) {
-				if(my_cards.get(my_cards.size() - 1).GetCol() == 4 && 
-						my_cards.get(my_cards.size() - 2).GetCol() == 4) {
-					PlayCards.add(my_cards.get(my_cards.size() - 1));
-					PlayCards.add(my_cards.get(my_cards.size() - 2));
+				if(this.keep_card.get(this.keep_card.size() - 1).GetCol() == 4 && 
+						this.keep_card.get(this.keep_card.size() - 2).GetCol() == 4) {
+					PlayCards.add(this.keep_card.get(this.keep_card.size() - 1));
+					PlayCards.add(this.keep_card.get(this.keep_card.size() - 2));
 				}
 			}
 		}
@@ -229,13 +220,13 @@ public class Player {
 		if(last_number == 4 && last_hash.size() == 1) {
 			int lcd = last_cards.get(0).GetNum();
 			boolean ifbig = false;
-			for(int i = 0;i < my_cards.size() - 3;i++) {
-				if(my_cards.get(i).GetNum() == my_cards.get(i + 1).GetNum() &&
-						my_cards.get(i + 1).GetNum() == my_cards.get(i + 2).GetNum() &&
-						my_cards.get(i + 2).GetNum() == my_cards.get(i + 3).GetNum() &&
-						my_cards.get(i).GetNum() > lcd) {
+			for(int i = 0;i < this.keep_card.size() - 3;i++) {
+				if(this.keep_card.get(i).GetNum() == this.keep_card.get(i + 1).GetNum() &&
+						this.keep_card.get(i + 1).GetNum() == this.keep_card.get(i + 2).GetNum() &&
+						this.keep_card.get(i + 2).GetNum() == this.keep_card.get(i + 3).GetNum() &&
+						this.keep_card.get(i).GetNum() > lcd) {
 					for(int j = i;j < i + 4;j++) {
-						PlayCards.add(my_cards.get(j));
+						PlayCards.add(this.keep_card.get(j));
 						ifbig = true;
 					}
 					break;
@@ -244,10 +235,10 @@ public class Player {
 			
 			//王炸
 			if(ifbig == false) {
-				if(my_cards.get(my_cards.size() - 1).GetCol() == 4 && 
-						my_cards.get(my_cards.size() - 2).GetCol() == 4) {
-					PlayCards.add(my_cards.get(my_cards.size() - 1));
-					PlayCards.add(my_cards.get(my_cards.size() - 2));
+				if(this.keep_card.get(this.keep_card.size() - 1).GetCol() == 4 && 
+						this.keep_card.get(this.keep_card.size() - 2).GetCol() == 4) {
+					PlayCards.add(this.keep_card.get(this.keep_card.size() - 1));
+					PlayCards.add(this.keep_card.get(this.keep_card.size() - 2));
 				}
 			}
 		}
