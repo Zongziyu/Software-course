@@ -55,6 +55,10 @@ public class Player {
 		return true;
 	}
 	
+	public void SetScore(int add_score) {
+		this.score += add_score;
+	}
+	
 	//理牌
 	public List<Card> Arrangement(List<Card> keep_cards) {
 		Collections.sort(keep_cards,new Comparator<Card>(){
@@ -96,7 +100,8 @@ public class Player {
 		else if(last_number == 2 && last_hash.size() == 1) {
 			for(int i = 0;i < this.keep_card.size() - 1;i++) {
 				if(this.keep_card.get(i).GetNum() > last_cards.get(0).GetNum()
-						&& this.keep_card.get(i + 1).GetNum() == this.keep_card.get(i).GetNum()) {
+						&& this.keep_card.get(i + 1).GetNum() == 
+						this.keep_card.get(i).GetNum()) {
 					PlayCards.add(this.keep_card.get(i));
 					PlayCards.add(this.keep_card.get(i+1));
 					can_play = true;
@@ -105,7 +110,8 @@ public class Player {
 			}
 		}
 		//3带
-		else if((last_number == 4 && last_hash.size() == 2) || last_number == 5 && last_hash.size() == 2) {
+		else if((last_number == 4 && last_hash.size() == 2) ||
+				last_number == 5 && last_hash.size() == 2) {
 			int usecard = 0;//3带中的带
 			for(Entry<Integer,Integer> entry : last_hash.entrySet()) {
 				if(entry.getValue() == 3) {
@@ -113,11 +119,15 @@ public class Player {
 				}
 			}
 			for(int i = 0;i < this.keep_card.size() - 2;i++) {
-				if(this.keep_card.get(i).GetNum() > usecard && this.keep_card.get(i).GetNum() == this.keep_card.get(i+1).GetNum()
-						 && this.keep_card.get(i+1).GetNum() == this.keep_card.get(i+2).GetNum()) {
+				if(this.keep_card.get(i).GetNum() > usecard && 
+						this.keep_card.get(i).GetNum() == 
+						this.keep_card.get(i+1).GetNum()
+						 && this.keep_card.get(i+1).GetNum() == 
+						 this.keep_card.get(i+2).GetNum()) {
 					PlayCards.add(this.keep_card.get(i));
 					PlayCards.add(this.keep_card.get(i+1));
 					PlayCards.add(this.keep_card.get(i+2));
+					//带1
 					if(last_number == 4) {
 						if(i != 0) {
 							PlayCards.add(this.keep_card.get(0));
@@ -126,13 +136,16 @@ public class Player {
 							PlayCards.add(this.keep_card.get(3));
 						}
 					}
+					//带2
 					else {
 						for(int j = 0;j < this.keep_card.size() - 1;j++)
 						{
 							if(j < i - 1 || j > i + 2) {
-								if(this.keep_card.get(j).GetNum() == this.keep_card.get(j+1).GetNum()) {
+								if(this.keep_card.get(j).GetNum() ==
+										this.keep_card.get(j+1).GetNum()) {
 									PlayCards.add(this.keep_card.get(j));
 									PlayCards.add(this.keep_card.get(j + 1));
+									break;
 								}
 							}
 						}
@@ -212,9 +225,12 @@ public class Player {
 		if(can_play == false) {
 			//普通炸弹
 			for(int i = 0;i < this.keep_card.size() - 3;i++) {
-				if(this.keep_card.get(i).GetNum() == this.keep_card.get(i + 1).GetNum() &&
-						this.keep_card.get(i + 1).GetNum() == this.keep_card.get(i + 2).GetNum() &&
-						this.keep_card.get(i + 2).GetNum() == this.keep_card.get(i + 3).GetNum()) {
+				if(this.keep_card.get(i).GetNum() ==
+						this.keep_card.get(i + 1).GetNum() &&
+						this.keep_card.get(i + 1).GetNum() == 
+						this.keep_card.get(i + 2).GetNum() &&
+						this.keep_card.get(i + 2).GetNum() == 
+						this.keep_card.get(i + 3).GetNum()) {
 					for(int j = i;j < i + 4;j++) {
 						PlayCards.add(this.keep_card.get(j));
 						can_play = true;
@@ -238,9 +254,12 @@ public class Player {
 			int lcd = last_cards.get(0).GetNum();
 			boolean ifbig = false;
 			for(int i = 0;i < this.keep_card.size() - 3;i++) {
-				if(this.keep_card.get(i).GetNum() == this.keep_card.get(i + 1).GetNum() &&
-						this.keep_card.get(i + 1).GetNum() == this.keep_card.get(i + 2).GetNum() &&
-						this.keep_card.get(i + 2).GetNum() == this.keep_card.get(i + 3).GetNum() &&
+				if(this.keep_card.get(i).GetNum() == 
+						this.keep_card.get(i + 1).GetNum() &&
+						this.keep_card.get(i + 1).GetNum() == 
+						this.keep_card.get(i + 2).GetNum() &&
+						this.keep_card.get(i + 2).GetNum() == 
+						this.keep_card.get(i + 3).GetNum() &&
 						this.keep_card.get(i).GetNum() > lcd) {
 					for(int j = i;j < i + 4;j++) {
 						PlayCards.add(this.keep_card.get(j));
@@ -347,31 +366,43 @@ public class Player {
 				can_play = false;
 			}
 			else {
-				if(choice_cards.get(0).GetNum() < last_cards.get(0).GetNum()) {
+				if(choice_cards.get(0).GetNum() <= last_cards.get(0).GetNum()) {
 					can_play = false;
 				}
 				else {
+					//双
 					if(last_number / last_hash.size() == 2) {
 						int count = 0;
+						boolean ifok = true;
 						while(count < choice_cards.size() - 2) {
-							if(choice_cards.get(count).GetNum() != choice_cards.get(count+1).GetNum() ||
-									choice_cards.get(count+1).GetNum()+1 != choice_cards.get(count+2).GetNum()) {
+							if(choice_cards.get(count).GetNum() != 
+									choice_cards.get(count+1).GetNum() ||
+									choice_cards.get(count+1).GetNum()+1 !=
+									choice_cards.get(count+2).GetNum()) {
 								can_play = false;
+								ifok = false;
 								break;
 							}
 							count+=2;
 						}
-						can_play = true;
+						if(ifok){
+							can_play = true;
+						}
 					}
+					//单
 					else {
+						boolean ifok = true;
 						for(int i = 0; i < choice_number - 1;i++) {
 							if(choice_cards.get(i).GetNum() + 1 != 
 									choice_cards.get(i + 1).GetNum()) {
 								can_play = false;
+								ifok = false;
 								break;
 							}
 						}
-						can_play = true;
+						if(ifok) {
+							can_play = true;
+						}
 					}
 				}
 			}
@@ -408,10 +439,20 @@ public class Player {
 					&& choice_cards.get(1).GetNum() == 14) {
 				can_play = true;
 			}
-		}		
+		}
+		//将出的牌从手牌中移除
+		if(can_play)
+		{
+			for(int i = 0;i < this.keep_card.size();i++) {
+				for(int j = 0; j < choice_cards.size();j++) {
+					if(this.keep_card.get(i) == choice_cards.get(j)) {
+						this.keep_card.remove(i);
+					}
+				}
+			}
+		}
 		return can_play;
-	}
-	
+	}	
 }
 
 
