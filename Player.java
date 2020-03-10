@@ -3,9 +3,7 @@ package FightAgainstLandlords;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 public class Player {
 	public String role;
@@ -75,19 +73,20 @@ public class Player {
 		last_cards = this.Arrangement(last_cards);
 		List<Card> PlayCards =  new ArrayList<Card>();
 		//整理重复的牌
-		HashMap<Integer,Integer> last_hash = new HashMap<Integer,Integer>();
-		for(Card card:last_cards) {
-			if(last_hash.get(card.GetNum()) != null) {
-				Integer integer = last_hash.get(card.GetNum());
-				last_hash.put(card.GetNum(),integer + 1);
-			}
-			else {
-				last_hash.put(card.GetNum(), 1);
-			}
-		}
-		int last_number = last_cards.size();
+		List<NoRepeatCard> last_np = new ArrayList<NoRepeatCard>();
+		last_np = this.no_repeat(last_cards, last_np);
+		int last_type = this.ChoiceType(last_cards);//类型计算
+		int last_imp = this.GetImportCard(last_np);//计算关键牌
 		boolean can_play = false;//表示是否有牌可出
-		if(last_number == 1) {
+		boolean have_bomb = false;//对方是否出炸弹
+		if(last_type == 4 || last_type == 5) {
+			have_bomb = true;
+		}
+		else {
+			have_bomb = false;
+		}
+		//单牌
+		if(last_type == 0) {
 			for(Card card:this.keep_card) {
 				if(card.GetNum() > last_cards.get(0).GetNum()) {
 					PlayCards.add(card);
@@ -97,7 +96,7 @@ public class Player {
 			}
 		}
 		//对
-		else if(last_number == 2 && last_hash.size() == 1) {
+		else if(last_type == 1) {
 			for(int i = 0;i < this.keep_card.size() - 1;i++) {
 				if(this.keep_card.get(i).GetNum() > last_cards.get(0).GetNum()
 						&& this.keep_card.get(i + 1).GetNum() == 
@@ -110,108 +109,181 @@ public class Player {
 			}
 		}
 		//3带
-		else if((last_number == 4 && last_hash.size() == 2) ||
-				last_number == 5 && last_hash.size() == 2) {
-			int usecard = 0;//3带中的带
-			for(Entry<Integer,Integer> entry : last_hash.entrySet()) {
-				if(entry.getValue() == 3) {
-					usecard = entry.getKey();
+		else if(last_type == 2 || last_type == 3) {
+			//选出3张牌
+			int flag = 0;
+			for(int i = 0;i < this.keep_card.size();i++) {
+				if(this.keep_card.get(i).GetNum() > last_imp) {
+					PlayCards.add(this.keep_card.get(i));
+					flag = i;
+				}
+				if(PlayCards.size() == 3) {
+					if(this.ChoiceType(PlayCards) != 11 ) {
+						PlayCards.remove(0);
+					}
+					else {
+						can_play = true;
+						break;
+					}
 				}
 			}
-			for(int i = 0;i < this.keep_card.size() - 2;i++) {
-				if(this.keep_card.get(i).GetNum() > usecard && 
-						this.keep_card.get(i).GetNum() == 
-						this.keep_card.get(i+1).GetNum()
-						 && this.keep_card.get(i+1).GetNum() == 
-						 this.keep_card.get(i+2).GetNum()) {
-					PlayCards.add(this.keep_card.get(i));
-					PlayCards.add(this.keep_card.get(i+1));
-					PlayCards.add(this.keep_card.get(i+2));
-					//带1
-					if(last_number == 4) {
-						if(i != 0) {
-							PlayCards.add(this.keep_card.get(0));
+			//选带
+			if(can_play == true) {
+				if(last_type == 2) {
+					for(int i = 0;i < this.keep_card.size();i++) {
+						if(i < flag - 2 || i > flag) {
+							PlayCards.add(this.keep_card.get(i));
+							break;
+						}
+					}
+					if(PlayCards.size() < 4) {
+						can_play = false;
+					}
+				}
+				else if(last_type == 3) {
+					for(int i = 0;i < this.keep_card.size() - 1;i++) {
+						if(i < flag - 3 || i > flag) {
+							if(this.keep_card.get(i).GetNum() == 
+									this.keep_card.get(i + 1).GetNum()) {
+								PlayCards.add(this.keep_card.get(i));
+								PlayCards.add(this.keep_card.get(i + 1));
+								break;
+							}
+						}
+					}
+					if(PlayCards.size() < 5) {
+						can_play = false;
+					}
+				}
+			}
+		}	
+		//单顺
+		else if(last_type == 6) {
+			for(int i = 0;i < this.keep_card.size();i++) {
+				if(this.keep_card.get(i).GetNum() > last_cards.get(0).GetNum()) {
+					if(PlayCards.size() == 0) {	
+						PlayCards.add(this.keep_card.get(i));
+					}
+					else {
+						PlayCards = this.Biger(PlayCards, i);
+					}
+					if(PlayCards.size() == last_cards.size()) {
+						can_play = true;
+						break;
+					}
+				}
+			}
+		}
+		//对顺
+		else if(last_type == 7) {
+			for(int i = 0;i < this.keep_card.size();i++) {
+				if(this.keep_card.get(i).GetNum() > last_cards.get(0).GetNum()) {
+					if(PlayCards.size() == 0) {	
+						PlayCards.add(this.keep_card.get(i));
+					}
+					else {
+						if(PlayCards.size() % 2 != 0) {
+							PlayCards = this.Equal(PlayCards, i);
 						}
 						else {
-							PlayCards.add(this.keep_card.get(3));
+							PlayCards = this.Biger(PlayCards, i);
 						}
 					}
-					//带2
-					else {
-						for(int j = 0;j < this.keep_card.size() - 1;j++)
-						{
-							if(j < i - 1 || j > i + 2) {
-								if(this.keep_card.get(j).GetNum() ==
-										this.keep_card.get(j+1).GetNum()) {
-									PlayCards.add(this.keep_card.get(j));
-									PlayCards.add(this.keep_card.get(j + 1));
-									break;
-								}
-							}
-						}
+					if(PlayCards.size() == last_cards.size()) {
+						can_play = true;
+						break;
 					}
-					break;
 				}
 			}
-			can_play = true;
-		}
-		//顺子
-		else if(last_number >= 6) {
-			//对顺
-			if(last_number / last_hash.size() == 2) {
-				for(int i = 0;i < this.keep_card.size();i++) {
-					if(this.keep_card.get(i).GetNum() > last_cards.get(0).GetNum()) {
-						if(PlayCards.size() == 0) {
+		}	
+		//飞机
+		else if(last_type == 8 || last_type == 9 || last_type == 10) {
+			List<Integer> flag = new ArrayList<Integer>();
+			//飞机数量
+			int imp_number = (last_cards.size() / (last_type - 5)) * 3;
+			System.out.println("imp_number:" + imp_number);
+			//出牌数量
+			int number = 0;
+			//3连寻找成败
+			boolean if_find = false;
+			//寻找3联对
+			for(int i = 0;i < this.keep_card.size();i++) {
+				if(this.keep_card.get(i).GetNum() > last_imp) {
+					if(PlayCards.size() == 0) {
+						PlayCards.add(this.keep_card.get(i));
+						flag.add(i);
+					}
+					else {
+						if(this.keep_card.size() % 3 == 0) {
+							number  = PlayCards.size();
+							PlayCards = this.Biger(PlayCards, i);
+							if(number == PlayCards.size() - 1) {
+								flag.add(i);
+							}
+							else if(PlayCards.size() == 0) {
+								flag.clear();
+							}
+						}
+						else {
+							number = PlayCards.size();
+							PlayCards = this.Equal(PlayCards, i);
+							if(number == PlayCards.size() - 1) {
+								flag.add(i);
+							}
+							else if(PlayCards.size() == 0) {
+								flag.clear();
+							}
+						}
+					}
+					if(PlayCards.size() == imp_number) {
+						if_find = true;
+						break;
+					}
+				}
+			}
+			//寻找带牌
+			if(if_find)
+			{
+				if(last_type == 8) {
+					can_play = true;
+				}
+				//单
+				else if(last_type == 9) {
+					for(int i = 0;i < this.keep_card.size();i++) {
+						boolean ifhave = false;
+						for(int j = 0;j < flag.size();j++) {
+							if(flag.get(j) == i) {
+								ifhave = true;
+								break;
+							}
+						}
+						if(ifhave == false) {
 							PlayCards.add(this.keep_card.get(i));
 						}
-						else if(PlayCards.size() %2 == 0) {
-							if(this.keep_card.get(i).GetNum() - 1 
-									== PlayCards.get(PlayCards.size() - 1).GetNum()) {
-								PlayCards.add(this.keep_card.get(i));
-							}
-							else if(this.keep_card.get(i).GetNum()
-									== PlayCards.get(PlayCards.size() - 1).GetNum()) {
-								//空跑
-							}
-							else
-								PlayCards.clear();
-								
-						}
-						else if(PlayCards.size()%2 != 0) {
-							if(this.keep_card.get(i).GetNum() 
-									== PlayCards.get(PlayCards.size() - 1).GetNum()) {
-								PlayCards.add(this.keep_card.get(i));
-							}
-							else
-								PlayCards.clear();
-						}
-						if(PlayCards.size() == last_number) {
+						if(PlayCards.size() == last_cards.size()) {
 							can_play = true;
 							break;
 						}
 					}
 				}
-			}
-			//单顺
-			else {
-				for(int i = 0;i < this.keep_card.size();i++) {
-					if(this.keep_card.get(i).GetNum() > last_cards.get(0).GetNum())
-					{
-						if(PlayCards.size() == 0) {
-							PlayCards.add(this.keep_card.get(i));
+				//对
+				else {
+					for(int i = 0;i < this.keep_card.size() - 1;i++) {
+						boolean ifhave = false;
+						for(int j = 0;j < flag.size();j++) {
+							if(flag.get(j) == i || flag.get(j) == i + 1) {
+								ifhave = true;
+								break;
+							}
 						}
-						else if(this.keep_card.get(i).GetNum() - 1 == 
-								PlayCards.get(PlayCards.size() - 1).GetNum()) {
-							PlayCards.add(this.keep_card.get(i));
+						if(ifhave == false) {
+							if(this.keep_card.get(i).GetNum() == 
+									this.keep_card.get(i + 1).GetNum()) {
+								PlayCards.add(this.keep_card.get(i));
+								PlayCards.add(this.keep_card.get(i + 1));
+							}
 						}
-						else if(this.keep_card.get(i).GetNum() == 
-								PlayCards.get(PlayCards.size() - 1).GetNum()) {
-							//空跑
-						}
-						else {
-							PlayCards.clear();
-						}
-						if(PlayCards.size() == last_number) {
+						if(PlayCards.size() == last_cards.size()) {
 							can_play = true;
 							break;
 						}
@@ -221,231 +293,95 @@ public class Player {
 		}
 		if(can_play == false)
 			PlayCards.clear();
-		//出炸弹
-		if(can_play == false) {
+		
+		//出炸弹解决
+		if(can_play == false && have_bomb == false) {
+			System.out.println("Bomb");
+			PlayCards.clear();
 			//普通炸弹
-			for(int i = 0;i < this.keep_card.size() - 3;i++) {
-				if(this.keep_card.get(i).GetNum() ==
-						this.keep_card.get(i + 1).GetNum() &&
-						this.keep_card.get(i + 1).GetNum() == 
-						this.keep_card.get(i + 2).GetNum() &&
-						this.keep_card.get(i + 2).GetNum() == 
-						this.keep_card.get(i + 3).GetNum()) {
-					for(int j = i;j < i + 4;j++) {
-						PlayCards.add(this.keep_card.get(j));
-						can_play = true;
-					}
+			for(int i = 0;i < this.keep_card.size();i++) {
+				PlayCards.add(this.keep_card.get(i));
+				int play_type = -1;
+				if(PlayCards.size() == 4) {
+					play_type = this.ChoiceType(PlayCards);
+				}
+				if(play_type == 4) {
+					can_play = true;
 					break;
 				}
-			}
+				if(PlayCards.size() == 4) {
+					PlayCards.remove(0);
+				}
+			}		
 			//王炸
-			if(can_play == false) {
-				if(this.keep_card.get(this.keep_card.size() - 1).GetCol() == 4 && 
-						this.keep_card.get(this.keep_card.size() - 2).GetCol() == 4) {
-					PlayCards.add(this.keep_card.get(this.keep_card.size() - 1));
-					PlayCards.add(this.keep_card.get(this.keep_card.size() - 2));
+			if(can_play == false){
+				PlayCards.clear();
+				PlayCards.add(this.keep_card.get(this.keep_card.size() - 1));
+				PlayCards.add(this.keep_card.get(this.keep_card.size() - 2));
+				if(this.ChoiceType(PlayCards) == 5) {
 					can_play = true;
 				}
+				else {
+					PlayCards.clear();
+				}
 			}
+		}
+		//炸弹对炸弹
+		//普通炸弹
+		if(last_type == 4) {
+			for(int i = 0;i < this.keep_card.size();i++) {
+				if(this.keep_card.get(i).GetNum() > last_imp) {
+					PlayCards.add(this.keep_card.get(i));
+					int play_type = -1;
+					if(PlayCards.size() == 4) {
+						play_type = this.ChoiceType(PlayCards);
+					}
+					if(play_type == 4) {
+						can_play = true;
+						break;
+					}
+					if(PlayCards.size() == 4) {
+						PlayCards.remove(0);
+					}
+				}
+			}
+			//回王炸
+			if(can_play == false){
+				PlayCards.clear();
+				PlayCards.add(this.keep_card.get(this.keep_card.size() - 1));
+				PlayCards.add(this.keep_card.get(this.keep_card.size() - 2));
+				if(this.ChoiceType(PlayCards) == 5) {
+					can_play = true;
+				}
+				else {
+					PlayCards.clear();
+				}
+			}
+		}
+		//王炸
+		else if(last_type == 5) {
+			can_play = false;
 		}
 		
-		//炸弹对炸弹
-		if(last_number == 4 && last_hash.size() == 1) {
-			int lcd = last_cards.get(0).GetNum();
-			boolean ifbig = false;
-			for(int i = 0;i < this.keep_card.size() - 3;i++) {
-				if(this.keep_card.get(i).GetNum() == 
-						this.keep_card.get(i + 1).GetNum() &&
-						this.keep_card.get(i + 1).GetNum() == 
-						this.keep_card.get(i + 2).GetNum() &&
-						this.keep_card.get(i + 2).GetNum() == 
-						this.keep_card.get(i + 3).GetNum() &&
-						this.keep_card.get(i).GetNum() > lcd) {
-					for(int j = i;j < i + 4;j++) {
-						PlayCards.add(this.keep_card.get(j));
-						ifbig = true;
-						can_play = true;
-					}
-					break;
-				}
-			}
-			
-			//王炸
-			if(ifbig == false) {
-				if(this.keep_card.get(this.keep_card.size() - 1).GetCol() == 4 && 
-						this.keep_card.get(this.keep_card.size() - 2).GetCol() == 4) {
-					PlayCards.add(this.keep_card.get(this.keep_card.size() - 1));
-					PlayCards.add(this.keep_card.get(this.keep_card.size() - 2));
-					can_play = true;
-				}
-			}
-		}
 		if(can_play == false) {
 			PlayCards.clear();
 		}
+//		play_type = this.ChoiceType(PlayCards);
+		System.out.println(can_play);
+//		System.out.println("type:" + play_type);
+		System.out.println("last_type:"+last_type);
 		return PlayCards;
 	}
 	
 	//打牌
-	public boolean Play(List<Card> choice_cards,List<Card> last_cards){
-		choice_cards = this.Arrangement(choice_cards);
-		last_cards = this.Arrangement(last_cards);
+	public boolean Play(List<Card> last_cards,List<Card> choice_cards){
 		boolean can_play = false;
-		boolean haveBomb = false;
-		int choice_number = choice_cards.size();
-		int last_number = last_cards.size();
-		//重复归并统计
-		HashMap<Integer,Integer> last_hash = new HashMap<Integer,Integer>();
-		HashMap<Integer,Integer> choice_hash = new HashMap<Integer,Integer>();
-		for(Card card:last_cards) {
-			if(last_hash.get(card.GetNum()) != null) {
-				Integer integer = last_hash.get(card.GetNum());
-				last_hash.put(card.GetNum(),integer + 1);
-			}
-			else {
-				last_hash.put(card.GetNum(), 1);
-			}
-		}
-		for(Card card:choice_cards) {
-			if(choice_hash.get(card.GetNum()) != null) {
-				Integer integer = choice_hash.get(card.GetNum());
-				choice_hash.put(card.GetNum(),integer + 1);
-			}
-			else {
-				choice_hash.put(card.GetNum(), 1);
-			}
-		}
-		//单
-		if(last_number == 1 && choice_number == 1) {
-			if(choice_cards.get(0).GetNum() > last_cards.get(0).GetNum())
-				can_play = true;
-			else
-				can_play = false;
-		}
-		//对子
-		else if(last_number == 2 && choice_number == 2) {
-			if(last_hash.size() == 2) {
-				can_play = false;
-				haveBomb = true;
-			}
-			else {
-				if(choice_hash.size() == 1) {
-					if(choice_cards.get(0).GetNum() > last_cards.get(0).GetNum())
-						can_play = true;
-					else
-						can_play = false;
-				}
-				else {
-					can_play = false;
-				}
-			}
-		}
-		//3带
-		else if((last_number == 4 && last_hash.size() == 2) || last_number == 5 
-				&& last_hash.size() == 2 && last_number == choice_number) {
-			int lusecard = 0;//3带中的带
-			int cusecard = 0;
-			for(Entry<Integer,Integer> entry : last_hash.entrySet()) {
-				if(entry.getValue() == 3) {
-					lusecard = entry.getKey();
-				}
-			}
-			for(Entry<Integer,Integer> entry : choice_hash.entrySet()) {
-				if(entry.getValue() == 3) {
-					cusecard = entry.getKey();
-				}
-			}
-			if(cusecard > lusecard)
-				can_play = true;
-			else
-				can_play = false;
-		}
-		//顺子
-		else if(last_number >= 6) {
-			if(last_number != choice_number) {
-				can_play = false;
-			}
-			else {
-				if(choice_cards.get(0).GetNum() <= last_cards.get(0).GetNum()) {
-					can_play = false;
-				}
-				else {
-					//双
-					if(last_number / last_hash.size() == 2) {
-						int count = 0;
-						boolean ifok = true;
-						while(count < choice_cards.size() - 2) {
-							if(choice_cards.get(count).GetNum() != 
-									choice_cards.get(count+1).GetNum() ||
-									choice_cards.get(count+1).GetNum()+1 !=
-									choice_cards.get(count+2).GetNum()) {
-								can_play = false;
-								ifok = false;
-								break;
-							}
-							count+=2;
-						}
-						if(ifok){
-							can_play = true;
-						}
-					}
-					//单
-					else {
-						boolean ifok = true;
-						for(int i = 0; i < choice_number - 1;i++) {
-							if(choice_cards.get(i).GetNum() + 1 != 
-									choice_cards.get(i + 1).GetNum()) {
-								can_play = false;
-								ifok = false;
-								break;
-							}
-						}
-						if(ifok) {
-							can_play = true;
-						}
-					}
-				}
-			}
-		}
-		
-		//炸弹对炸弹
-		else if(last_number == 4 && last_hash.size() == 1) {
-			haveBomb = true;
-			if(choice_number == 4) {
-				if(choice_hash.size() != 1) {
-					can_play = false;
-				}
-				else {
-					if(choice_cards.get(0).GetNum() > last_cards.get(0).GetNum()) {
-						can_play = true;
-					}
-					else {
-						can_play = false;
-					}
-				}
-			}
-			if(choice_number == 2 && choice_cards.get(0).GetNum() == 13
-					&& choice_cards.get(1).GetNum() == 14) {
-				can_play = true;
-			}
-		}
-		
-		//炸弹解决问题
-		if(haveBomb == false && can_play == false) {
-			if(choice_number == 4 && choice_hash.size() == 1) {
-				can_play = true;
-			}
-			if(choice_number == 2 && choice_cards.get(0).GetNum() == 13
-					&& choice_cards.get(1).GetNum() == 14) {
-				can_play = true;
-			}
-		}
-		//将出的牌从手牌中移除
-		if(can_play)
-		{
+		can_play = this.Rule(last_cards, choice_cards);
+		//移除牌
+		if(can_play) {
 			for(int i = 0;i < this.keep_card.size();i++) {
-				for(int j = 0; j < choice_cards.size();j++) {
-					if(this.keep_card.get(i) == choice_cards.get(j)) {
+				for(int j = 0;j < choice_cards.size();j++) {
+					if(choice_cards.get(j) == this.keep_card.get(i)) {
 						this.keep_card.remove(i);
 					}
 				}
@@ -453,6 +389,252 @@ public class Player {
 		}
 		return can_play;
 	}	
+	
+	private boolean Rule(List<Card> last_cards,List<Card> choice_cards) {
+		boolean can_play = false;
+		last_cards = this.Arrangement(last_cards);
+		choice_cards = this.Arrangement(choice_cards);
+		//重复归并
+		List<NoRepeatCard> last_np = new ArrayList<NoRepeatCard>();
+		List<NoRepeatCard> choice_np = new ArrayList<NoRepeatCard>();
+		last_np = this.no_repeat(last_cards, last_np);
+		choice_np = this.no_repeat(choice_cards, choice_np);
+		//第一个出牌
+		if(last_cards.size() == 0) {
+			if(this.ChoiceType(choice_cards) != -1) {
+				can_play = true;
+			}
+		}
+		else {
+			int last_type = this.ChoiceType(last_cards);
+			int choice_type = this.ChoiceType(choice_cards);
+			if(choice_type == -1) {
+				can_play = false;
+			}
+			else {
+				int last_imp = this.GetImportCard(last_np);
+				int choice_imp = this.GetImportCard(last_np);
+				if(last_type != 4 && last_type != 5) {
+					//炸弹
+					if(choice_type == 4 || choice_type == 5) {
+						can_play = true;
+					}
+					else {
+						if(choice_type != last_type ) {
+							can_play = false;
+						}
+						else {
+							if(choice_imp > last_imp) {
+								can_play = true;
+							}
+							else {
+								can_play = false;
+							}
+						}
+					}
+				}
+				//普通炸弹
+				else if(last_type == 4) {
+					if(choice_type != 4 || choice_type != 5) {
+						can_play = false;
+					}
+					//王炸
+					else if(choice_type == 5) {
+						can_play = true;
+					}
+					else if(choice_type == 4) {
+						if(choice_imp > last_imp) {
+							can_play = true;
+						}
+						else {
+							can_play = false;
+						}
+					}
+				}
+				else if(last_type == 5) {
+					can_play = false;
+				}
+			}
+		}
+		return can_play;
+	}
+	
+	//选牌规则
+	/*0:单牌, 1:对子, 2:3带1，3：3带2 ，4：普通炸弹,5:王炸,6:单顺，7：双顺,
+	 * 8:飞机，9：飞机带单,10:飞机带双 11:3张相同   */
+	private int ChoiceType(List<Card> choice_cards) {
+		int type = -1;
+		choice_cards = this.Arrangement(choice_cards);
+		List<NoRepeatCard> choice_np = new ArrayList<NoRepeatCard>();
+		choice_np = no_repeat(choice_cards,choice_np);
+		//单牌
+		if(choice_cards.size() == 1) {
+			type = 0;
+		}
+		//对子
+		else if(choice_cards.size() == 2 && choice_np.size() == 1) {
+			type = 1;
+		}
+		//3带1
+		else if(choice_cards.size() == 4 && choice_np.size() == 2) {
+			type = 2;
+		}
+		//3带2
+		else if(choice_cards.size() == 5 && choice_np.size() == 2) {
+			type = 3;
+		}
+		//普通炸弹
+		else if(choice_cards.size() == 4 && choice_np.size() == 1) {
+			type = 4;
+		}
+		//王炸
+		else if(choice_cards.get(0).GetNum() == 13 
+				&& choice_cards.get(1).GetNum() == 14
+				&& choice_cards.size() == 2) {
+			type = 5;
+		}
+		
+		//多牌
+		else if(choice_cards.size() >= 6) {
+			int cards_type = 0;
+			for(int i = 0;i < choice_np.size();i++) {
+				if(choice_np.get(i).GetNumber() == 2) {
+					if(cards_type <= 1)
+						cards_type = 1;
+				}
+				if(choice_np.get(i).GetNumber() == 3) {
+					cards_type = 2;
+				}
+			}
+			//单顺
+			if(choice_cards.size() == choice_np.size()) {
+				if(this.LianRule_1(choice_np)) {
+					type = 6;
+				}
+			}
+			//对顺
+			if(choice_cards.size() / choice_np.size() == 2 && cards_type == 1) {
+				if(this.LianRule_1(choice_np)) {
+					type = 7;
+				}
+			}
+			//飞机
+			if(choice_cards.size() / choice_np.size() == 3) {
+				if(this.LianRule_1(choice_np)) {
+					type = 8;
+				}
+			}
+			//飞机带单
+			if(choice_cards.size() / choice_np.size() == 2 && cards_type == 2) {
+				if(this.LianRule_2(choice_np)) {
+					type = 9;
+				}
+			}
+			//飞机带双
+			if(choice_cards.size() == 3 * choice_np.size() / 2 + choice_np.size() 
+				&& cards_type == 2) {
+				if(this.LianRule_2(choice_np)) {
+					type = 10;
+				}
+			}
+		}
+		//3张相同
+		else if(choice_cards.size() == 3 && choice_np.size() == 1) {
+			type = 11;
+		}
+		return type;
+	}
+	
+	//连牌规则1 有序
+	private boolean LianRule_1(List<NoRepeatCard> np) {
+		boolean on_rule = true;
+		for(int i = 0;i < np.size() - 1;i++) {
+			if(np.get(i).GetValue() + 1 != np.get(i+1).GetValue()) {
+				on_rule = false;
+				break;
+			}
+		}
+		return on_rule;
+	}
+	//连牌规则2 有三连对
+	private boolean LianRule_2(List<NoRepeatCard> np) {
+		boolean on_rule = true;
+		int start = -1;
+		for(int i = 0; i < np.size();i++) {
+			if(np.get(i).GetNumber() == 3) {
+				if(start == -1) {
+					start = np.get(i).GetValue();
+				}
+				else {
+					if(np.get(i).GetValue() != start + 1) {
+						on_rule = false;
+						break;
+					}
+					start = np.get(i).GetValue();
+				}
+			}
+		}
+		return on_rule;
+	}
+	
+	//关键牌提取
+	private int GetImportCard(List<NoRepeatCard> np) {
+		int imp = -1;
+		int maxnum = 0;
+		for(int i = 0;i < np.size();i++) {
+			if(np.get(i).GetNumber() > maxnum) {
+				imp = np.get(i).GetValue();
+				maxnum = np.get(i).GetNumber();
+			}
+		}
+		return imp;
+	}
+	
+	//重复归并
+	private List<NoRepeatCard> no_repeat(List<Card> cards_list,List<NoRepeatCard> np){
+		for(int i = 0;i < cards_list.size();i++) {
+			int num = cards_list.get(i).GetNum();
+			if(np.isEmpty()) {
+				np.add(new NoRepeatCard(num));
+			}
+			else {
+				if(np.get(np.size() - 1).GetValue() == num) {
+					np.get(np.size() - 1).NumberAdd();
+				}
+				else {
+					np.add(new NoRepeatCard(num));
+				}
+			}
+		}
+		return np;
+	}
+	
+	//差1
+	private List<Card> Biger(List<Card> PlayCards,int flag){
+		if(this.keep_card.get(flag).GetNum() == 
+				PlayCards.get(PlayCards.size() - 1).GetNum() + 1) {
+			PlayCards.add(this.keep_card.get(flag));
+				}
+		else if(this.keep_card.get(flag).GetNum() != 
+				PlayCards.get(PlayCards.size() - 1).GetNum() + 1
+				&& this.keep_card.get(flag).GetNum() != 
+				PlayCards.get(PlayCards.size() - 1).GetNum()) {
+			PlayCards.clear();
+		}
+		return PlayCards;
+	}
+	
+	//等大
+	private List<Card> Equal(List<Card> PlayCards,int flag){
+		if(this.keep_card.get(flag).GetNum() == 
+				PlayCards.get(PlayCards.size() - 1).GetNum()) {
+			PlayCards.add(this.keep_card.get(flag));
+		}
+		else {
+			PlayCards.clear();
+		}
+		return PlayCards;
+	}
 }
 
 
