@@ -11,4 +11,4 @@
 
 5.Timer 计时器，负责倒计时。
 
-6. NoRepeatCard 数据结构类，让点数相同的纸牌归并，Value：点数，Number：该点数相同的牌的数量
+6.NoRepeatCard 数据结构类，让点数相同的纸牌归并，Value：点数，Number：该点数相同的牌的数量
